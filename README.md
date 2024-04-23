@@ -151,6 +151,31 @@ need to `npm install mapbox-gl` before we run `npm start`
 ### How to add the basic map components you need
 
 #### Get the coordinates of the mouse pointer 
+To retrieve the coordinates of the mouse pointer, you can utilize Mapbox GL JS events. The following example demonstrates how to achieve this functionality in a React application:
+
+In the `src/App.js` file, add the following code:
+
+```
+... js code
+map.current.on('mousemove', (e) => {
+  document.getElementById('info').innerHTML =
+    // `e.point` is the x, y coordinates of the `mousemove` event
+    // relative to the top-left corner of the map.
+    JSON.stringify(e.point) +
+    '<br />' +
+    // `e.lngLat` is the longitude, latitude geographical position of the event.
+    JSON.stringify(e.lngLat.wrap());
+});
+```
+
+Then, in the return section of the same file, add the following HTML element to display the coordinates:
+
+```
+<pre id="info"></pre> 
+```
+
+This code listens for the mousemove event on the map and displays the coordinates of the mouse pointer relative to the map container and the corresponding longitude and latitude geographical position on the map.
+
 #### Display map scale
 #### Display zoom and rotation controls 
 
