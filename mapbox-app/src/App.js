@@ -41,7 +41,8 @@ export default function App() {
         JSON.stringify(e.lngLat.wrap());
     });
 
-
+    // Add a scale control to the map
+    map.current.addControl(new mapboxgl.ScaleControl());
   });
 
   return (
