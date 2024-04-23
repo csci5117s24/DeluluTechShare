@@ -29,12 +29,26 @@ export default function App() {
       setLat(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
+
+    // Get coordinates of the mouse pointer
+    map.current.on('mousemove', (e) => {
+      document.getElementById('info').innerHTML =
+        // `e.point` is the x, y coordinates of the `mousemove` event
+        // relative to the top-left corner of the map.
+        JSON.stringify(e.point) +
+        '<br />' +
+        // `e.lngLat` is the longitude, latitude geographical position of the event.
+        JSON.stringify(e.lngLat.wrap());
+    });
+
+
   });
 
   return (
     <div>
       <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+        <pre id="info"></pre> {/* The coordinates of the mouse pointer */}
       </div>
       <div ref={mapContainer} className="map-container" />
     </div>
