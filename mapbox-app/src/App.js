@@ -43,6 +43,10 @@ export default function App() {
 
     // Add a scale control to the map
     map.current.addControl(new mapboxgl.ScaleControl());
+
+    // Add zoom and rotation controls to the map.
+    map.current.addControl(new mapboxgl.NavigationControl());
+
   });
 
   return (
