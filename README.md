@@ -57,7 +57,7 @@ npx create-react-app mapbox-app
 ```shell
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'mapbox-gl/dist/mapbox-gl.css'; #The stylesheet contains the Mapbox GL JS styles to display the map.
+import 'mapbox-gl/dist/mapbox-gl.css'; // # The stylesheet contains the Mapbox GL JS styles to display the map.
 import './index.css';
 import App from './App';
 
@@ -74,17 +74,17 @@ ReactDOM.render(
 ``` shell
 import React, { useRef, useEffect, useState } from 'react';
 
-# To use Mapbox GL with Create React App, you must add an exclamation point to exclude mapbox-gl from transpilation and disable the eslint rule import/no-webpack-loader-syntax
+// # To use Mapbox GL with Create React App, you must add an exclamation point to exclude mapbox-gl from transpilation and disable the eslint rule import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
-# use the access token you gain from registration
+// #use the access token you gain from registration
 mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
 
 export default function App() {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  # The state stores the longitude, latitude, and zoom for the map. These values will all change as your user interacts with the map.
+  // # The state stores the longitude, latitude, and zoom for the map. These values will all change as your user interacts with the map.
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
@@ -121,7 +121,7 @@ export default function App() {
    
 ```shell
 .map-container {
-  height: 100vh; #edit here to change map size
+  height: 100vh; /*edit here to change map size*/
 }
 
 .sidebar {
@@ -137,6 +137,8 @@ export default function App() {
   border-radius: 4px;
 }
 ```
+
+need to `npm install mapbox-gl` before we run `npm start`
 
 
 ### Step 1. Styles (how to change the link to switch the base map style)
