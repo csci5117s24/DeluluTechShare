@@ -54,7 +54,7 @@ npx create-react-app mapbox-app
 ### 2. Set up basic map
 1. After creating the React app, open the project folder in your code editor. Navigate to `src/index.js` and add the necessary stylesheets and Mapbox GL JS for your map:
 
-```shell
+```js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'mapbox-gl/dist/mapbox-gl.css'; // # The stylesheet contains the Mapbox GL JS styles to display the map.
@@ -71,7 +71,7 @@ ReactDOM.render(
 
 2. Now navigate to `src/App.js` and add the following:
 
-``` shell
+```js
 import React, { useRef, useEffect, useState } from 'react';
 
 // # To use Mapbox GL with Create React App, you must add an exclamation point to exclude mapbox-gl from transpilation and disable the eslint rule import/no-webpack-loader-syntax
@@ -119,7 +119,7 @@ export default function App() {
 
 3. Lastly, navigate to `src/index.css` and add the following:
    
-```shell
+```css
 .map-container {
   height: 100vh; /*edit here to change map size*/
 }
@@ -155,8 +155,7 @@ To retrieve the coordinates of the mouse pointer, you can utilize Mapbox GL JS e
 
 In the `src/App.js` file, add the following code:
 
-```
-... js code
+```js
 map.current.on('mousemove', (e) => {
   document.getElementById('info').innerHTML =
     // `e.point` is the x, y coordinates of the `mousemove` event
@@ -170,13 +169,24 @@ map.current.on('mousemove', (e) => {
 
 Then, in the return section of the same file, add the following HTML element to display the coordinates:
 
-```
+```js
 <pre id="info"></pre> 
 ```
 
 This code listens for the mousemove event on the map and displays the coordinates of the mouse pointer relative to the map container and the corresponding longitude and latitude geographical position on the map.
 
 #### Display map scale
+To display the map scale on your Mapbox map, you can use the ScaleControl provided by Mapbox GL JS.
+
+Add the following code snippet to your `src/App.js` file:
+
+```js
+map.current.addControl(new mapboxgl.ScaleControl());
+```
+
+This code snippet initializes and adds a scale control to your Mapbox map, allowing users to visualize the scale of the map in real-time. The scale is typically displayed in metric or imperial units depending on the map's zoom level.
+
+
 #### Display zoom and rotation controls 
 
 ### How to make the map interactive
