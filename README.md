@@ -10,28 +10,29 @@
       - [Install Node.js and npm (if you have not)  Node.js install](#install-nodejs-and-npm-if-you-have-not--nodejs-install)
       - [Install and create a new React app](#install-and-create-a-new-react-app)
     - [2. Set up basic map](#2-set-up-basic-map)
-    - [Step 1. Styles (how to change the link to switch the base map style)](#step-1-styles-how-to-change-the-link-to-switch-the-base-map-style)
-    - [Step 2. Zoom level introduction (what is zoom level, why does it matter, how to change it)](#step-2-zoom-level-introduction-what-is-zoom-level-why-does-it-matter-how-to-change-it)
-    - [Step 3. Center Location (how to get your current location and set it as the center)](#step-3-center-location-how-to-get-your-current-location-and-set-it-as-the-center)
-    - [Step 4. Add data (how to load and visualize geographic data on the map)](#step-4-add-data-how-to-load-and-visualize-geographic-data-on-the-map)
+    - [3. Edit Map Settings](#3-edit-map-settings)
+      - [1. Styles](#1-styles)
+      - [2. Zoom level](#2-zoom-level)
+      - [3. Center and Current Location](#3-center-and-current-location)
+      - [4. Add data (how to load and visualize geographic data on the map)](#4-add-data-how-to-load-and-visualize-geographic-data-on-the-map)
   - [Examples](#examples)
-    - [How to add the basic map components you need](#how-to-add-the-basic-map-components-you-need)
-      - [Get the coordinates of the mouse pointer](#get-the-coordinates-of-the-mouse-pointer)
-      - [Display map scale](#display-map-scale)
-      - [Display zoom and rotation controls](#display-zoom-and-rotation-controls)
+      - [1. Get the coordinates of the mouse pointer](#1-get-the-coordinates-of-the-mouse-pointer)
+      - [2. Display map scale](#2-display-map-scale)
+      - [3. Display zoom and rotation controls](#3-display-zoom-and-rotation-controls)
     - [How to make the map interactive](#how-to-make-the-map-interactive)
       - [Search for places](#search-for-places)
       - [Popup windows of locations on click](#popup-windows-of-locations-on-click)
   - [References and Links to More Info](#references-and-links-to-more-info)
 
-
+---
 
 ## Introduction
 
-
+---
 
 ## Registration
 
+---
 
 ## Map setup 
 ### 1. Create React app
@@ -57,7 +58,7 @@ npx create-react-app mapbox-app
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'mapbox-gl/dist/mapbox-gl.css'; // # The stylesheet contains the Mapbox GL JS styles to display the map.
+import 'mapbox-gl/dist/mapbox-gl.css'; // The stylesheet contains the Mapbox GL JS styles to display the map.
 import './index.css';
 import App from './App';
 
@@ -69,22 +70,22 @@ ReactDOM.render(
 );
 ```
 
-2. Now navigate to `src/App.js` and add the following:
+2. Now navigate to `src/App.js` and add the following (see comments for details):
 
 ```js
 import React, { useRef, useEffect, useState } from 'react';
 
-// # To use Mapbox GL with Create React App, you must add an exclamation point to exclude mapbox-gl from transpilation and disable the eslint rule import/no-webpack-loader-syntax
+// To use Mapbox GL with Create React App, you must add an exclamation point to exclude mapbox-gl from transpilation and disable the eslint rule import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
-// #use the access token you gain from registration
+// use the access token you gain from registration
 mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
 
 export default function App() {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  // # The state stores the longitude, latitude, and zoom for the map. These values will all change as your user interacts with the map.
+  // The state stores the longitude, latitude, and zoom for the map. These values will all change as your user interacts with the map.
   const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
@@ -117,7 +118,7 @@ export default function App() {
 ```
 
 
-3. Lastly, navigate to `src/index.css` and add the following:
+3. Then, navigate to `src/index.css` and add the following:
    
 ```css
 .map-container {
@@ -138,22 +139,116 @@ export default function App() {
 }
 ```
 
-need to `npm install mapbox-gl` before we run `npm start`
+4. Now we are done with implementing the basic map, before we run it, we need to install mapbox-gl if we have not:
+``` shell
+npm install mapbox-gl
+```
+
+after done installing, run the program with this line in terminal:
+
+``` shell
+npm start
+```
+
+Navigate to `http://localhost:3000` to see the map:
+
+<img src="images/basicmap.png" width="500" height="300">
+</div>
 
 
-### Step 1. Styles (how to change the link to switch the base map style)
-### Step 2. Zoom level introduction (what is zoom level, why does it matter, how to change it)
-### Step 3. Center Location (how to get your current location and set it as the center)
-### Step 4. Add data (how to load and visualize geographic data on the map) 
+### 3. Edit Map Settings
+#### 1. Styles 
+To change the map style in the implemented map, modify the `style` in `src/App.js` to use the styles link provided by [Mapbox](https://docs.mapbox.com/api/maps/styles/). For instance, to switch to the satellite street style, replace it with the satellite map link:
 
+```js
+map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/satellite-streets-v12', // change here
+      center: [lng, lat],
+      zoom: zoom
+    });
+```
+
+Here we can see how the map looks like with new style:
+
+<img src="images/mapstyle.png" width="500" height="300">
+</div>
+
+
+#### 2. Zoom level
+Zoom levels control the extent of the world visible on a map. Mapbox offers maps across 23 zoom levels, ranging from 0 (fully zoomed out) to 22 (fully zoomed in).
+
+Here is a reference of what users would see with different zoom levels:
+| at zoom level | what you can see |
+|----------|----------|
+| 0 | The Earth |
+| 3 | A continent |
+| 4 | Large islands |
+| 6 | Large rivers |
+| 10 | Large roads |
+| 15 | Buildings |
+
+We can change the zoom level in `src/App.js`:
+```js
+const [zoom, setZoom] = useState(9); // Replace '9' with your preferred zoom level
+```
+
+#### 3. Center and Current Location 
+The **center location** on a map typically refers to the geographical coordinates around which the map is centered and displayed to the user. 
+
+We can change the map center location by changing the longitude and latitude in `src/App.js`:
+```js
+  const [lng, setLng] = useState(-70.9); // replace -70.9 to preferred longitude
+  const [lat, setLat] = useState(42.35); // replace -42.35 to preferred latitude
+```
+We can also set the center location to user's **current location** by change the following code in `src/App.js`:
+
+```js
+useEffect(() => {
+    if (map.current) return; 
+
+    // Add this function to get current location
+    const getCurrentLocation = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { longitude, latitude } = position.coords;
+            setLng(longitude);
+            setLat(latitude);
+            map.current.setCenter([longitude, latitude]);
+        });
+    };
+
+    map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [lng, lat],
+        zoom: zoom
+    });
+
+    map.current.on('move', () => {
+        setLng(map.current.getCenter().lng.toFixed(4));
+        setLat(map.current.getCenter().lat.toFixed(4));
+        setZoom(map.current.getZoom().toFixed(2));
+    });
+
+    getCurrentLocation();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+```
+
+
+
+#### 4. Add data (how to load and visualize geographic data on the map) 
+
+---
 ## Examples
 
-### How to add the basic map components you need
+Now that we've developed a comprehensive map, here are additional functionalities we can incorporate.
 
-#### Get the coordinates of the mouse pointer 
+#### 1. Get the coordinates of the mouse pointer 
 To retrieve the coordinates of the mouse pointer, you can utilize Mapbox GL JS events.
 
-In `src/App.js`, add:
+In `src/App.js`, add the following:
 
 ```js
 map.current.on('mousemove', (e) => {
@@ -173,12 +268,12 @@ Then, in the return section of the same file, include the following HTML element
 <pre id="info"></pre> 
 ```
 <div style="text-align:center;">
-<img src="images/get_the_coordinates_of_the_mouse_pointer.gif" width="300" height="200">
+<img src="images/get_the_coordinates_of_the_mouse_pointer.gif" width="450" height="350">
 </div>
 
 This code listens for the `mousemove` event on the map and displays the coordinates of the mouse pointer relative to the map container along with the corresponding longitude and latitude.
 
-#### Display map scale
+#### 2. Display map scale
 To show the map scale dynamically, you can use the `ScaleControl` provided by Mapbox GL JS.
 
 In `src/App.js`, add:
@@ -187,12 +282,12 @@ In `src/App.js`, add:
 map.current.addControl(new mapboxgl.ScaleControl());
 ```
 <div style="text-align:center;">
-<img src="images/display_map_scale.gif" width="300" height="200">
+<img src="images/display_map_scale.gif" width="450" height="300">
 </div>
 
 This snippet initializes and adds a scale control, allowing users to visualize the map scale in real-time, typically in metric or imperial units, depending on the map's zoom level.
 
-#### Display zoom and rotation controls 
+#### 3. Display zoom and rotation controls 
 To add zoom and rotation controls to your Mapbox map, you can utilize the `NavigationControl` provided by Mapbox GL JS.
 
 Add the following code snippet to `src/App.js`:
@@ -202,7 +297,7 @@ map.current.addControl(new mapboxgl.NavigationControl());
 ```
 
 <div style="text-align:center;">
-<img src="images/display_zoom_and_rotation_controls.gif" width="300" height="200">
+<img src="images/display_zoom_and_rotation_controls.gif" width="450" height="300">
 </div>
 
 These controls empower users to zoom in, zoom out, and rotate the map view, providing an intuitive way to interact with the map and customize their view as needed.
