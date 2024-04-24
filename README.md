@@ -5,6 +5,8 @@
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Registration](#registration)
+    - [1. Create an Account](#1-create-an-account)
+    - [2. Create an Access Token](#2-create-an-access-token)
   - [Map setup](#map-setup)
     - [1. Create React app](#1-create-react-app)
       - [Install Node.js and npm (if you have not)  Node.js install](#install-nodejs-and-npm-if-you-have-not--nodejs-install)
@@ -34,6 +36,38 @@
 ---
 
 ## Registration
+
+Before setting up our map, we need to register in Mapbox.
+
+### 1. Create an Account
+
+Click [here](https://www.mapbox.com/) to navigate to the website. Then, click the **sign up** button at the upper right corner:
+
+![Mapbox Homepage](images/homepage.png)
+
+---
+
+### 2. Create an Access Token
+
+Once you've signed up and verified your email, follow these steps:
+
+1. Go to the account home page.
+2. Scroll down and click on **create a token**:
+
+![Account Home](images/accounthome.png)
+
+---
+
+3. Choose a name for your token and keep the token scope default.
+4. Scroll down and click **create** at the end:
+
+![Create Token](images/createkey.png)
+
+---
+
+5. Now you have your access token. Click the button to copy it for later use:
+
+![Copy Token](images/copykey.png)
 
 ---
 

@@ -65,7 +65,7 @@
 // basic map: style, zoom, center current location
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-mapboxgl.accessToken = 'pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2x0M2FqODhkMWdhZzJscDhsNnlzYTFyaCJ9.eSPui_SEdaclP0xtujBzvw';
+mapboxgl.accessToken = 'pk.eyJ1Ijoid2FkZXdoYyIsImEiOiJjbHZkZDYzMWcwdGFlMmpxbWIyajM3d3l6In0.2AWytCqBSNS1hxiGhE62zA';
 
 export default function App() {
   const mapContainer = useRef(null);
