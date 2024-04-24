@@ -9,7 +9,7 @@
     - [2. Create an Access Token](#2-create-an-access-token)
   - [Map setup](#map-setup)
     - [1. Create React app](#1-create-react-app)
-      - [Install Node.js and npm (if you have not)  Node.js install](#install-nodejs-and-npm-if-you-have-not--nodejs-install)
+      - [Install Node.js and npm](#install-nodejs-and-npm)
       - [Install and create a new React app](#install-and-create-a-new-react-app)
     - [2. Set up basic map](#2-set-up-basic-map)
     - [3. Edit Map Settings](#3-edit-map-settings)
@@ -73,8 +73,8 @@ Once you've signed up and verified your email, follow these steps:
 
 ## Map setup 
 ### 1. Create React app
-#### Install Node.js and npm (if you have not)  [Node.js install](https://nodejs.org/en)  
-When Node.js is downloaded, npm comes bundled with Node.js
+#### Install Node.js and npm
+If you haven't already, download and install [Node.js](https://nodejs.org/en), which includes npm.
 
 #### Install and create a new React app
 Open your terminal, copy and paste and run the following line to install Create React App globally:
@@ -92,105 +92,105 @@ npx create-react-app mapbox-app
 ### 2. Set up basic map
 1. After creating the React app, open the project folder in your code editor. Navigate to `src/index.js` and add the necessary stylesheets and Mapbox GL JS for your map:
 
-```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'mapbox-gl/dist/mapbox-gl.css'; // The stylesheet contains the Mapbox GL JS styles to display the map.
-import './index.css';
-import App from './App';
+    ```js
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import 'mapbox-gl/dist/mapbox-gl.css'; // The stylesheet contains the Mapbox GL JS styles to display the map.
+    import './index.css';
+    import App from './App';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-```
+    ReactDOM.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+    );
+    ```
 
 2. Now navigate to `src/App.js` and add the following (see comments for details):
 
-```js
-import React, { useRef, useEffect, useState } from 'react';
+    ```js
+    import React, { useRef, useEffect, useState } from 'react';
 
-// To use Mapbox GL with Create React App, you must add an exclamation point to exclude mapbox-gl from transpilation and disable the eslint rule import/no-webpack-loader-syntax
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+    // To use Mapbox GL with Create React App, you must add an exclamation point to exclude mapbox-gl from transpilation and disable the eslint rule import/no-webpack-loader-syntax
+    import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
-// use the access token you gain from registration
-mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+    // use the access token you gain from registration
+    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
 
-export default function App() {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
+    export default function App() {
+    const mapContainer = useRef(null);
+    const map = useRef(null);
 
-  // The state stores the longitude, latitude, and zoom for the map. These values will all change as your user interacts with the map.
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
+    // The state stores the longitude, latitude, and zoom for the map. These values will all change as your user interacts with the map.
+    const [lng, setLng] = useState(-70.9);
+    const [lat, setLat] = useState(42.35);
+    const [zoom, setZoom] = useState(9);
 
-  useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [lng, lat],
-      zoom: zoom
+    useEffect(() => {
+        if (map.current) return; // initialize map only once
+        map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [lng, lat],
+        zoom: zoom
+        });
+
+        map.current.on('move', () => {
+        setLng(map.current.getCenter().lng.toFixed(4));
+        setLat(map.current.getCenter().lat.toFixed(4));
+        setZoom(map.current.getZoom().toFixed(2));
+        });
     });
 
-    map.current.on('move', () => {
-      setLng(map.current.getCenter().lng.toFixed(4));
-      setLat(map.current.getCenter().lat.toFixed(4));
-      setZoom(map.current.getZoom().toFixed(2));
-    });
-  });
-
-  return (
-    <div>
-      <div className="sidebar">
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div>
-      <div ref={mapContainer} className="map-container" />
-    </div>
-  );
-}
-```
+    return (
+        <div>
+        <div className="sidebar">
+            Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+        </div>
+        <div ref={mapContainer} className="map-container" />
+        </div>
+    );
+    }
+    ```
 
 
 3. Then, navigate to `src/index.css` and add the following:
    
-```css
-.map-container {
-  height: 100vh; /*edit here to change map size*/
-}
+    ```css
+    .map-container {
+    height: 100vh; /*edit here to change map size*/
+    }
 
-.sidebar {
-  background-color: rgb(35 55 75 / 90%);
-  color: #fff;
-  padding: 6px 12px;
-  font-family: monospace;
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 12px;
-  border-radius: 4px;
-}
-```
+    .sidebar {
+    background-color: rgb(35 55 75 / 90%);
+    color: #fff;
+    padding: 6px 12px;
+    font-family: monospace;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 12px;
+    border-radius: 4px;
+    }
+    ```
 
 4. Now we are done with implementing the basic map, before we run it, we need to install mapbox-gl if we have not:
-``` shell
-npm install mapbox-gl
-```
+    ``` shell
+    npm install mapbox-gl
+    ```
 
-after done installing, run the program with this line in terminal:
+    after done installing, run the program with this line in terminal:
 
-``` shell
-npm start
-```
+    ``` shell
+    npm start
+    ```
 
-Navigate to `http://localhost:3000` to see the map:
+    Navigate to `http://localhost:3000` to see the map:
 
-<img src="images/basicmap.png" width="825" height="425">
-</div>
+    <img src="images/basicmap.png" width="825" height="425">
+    </div>
 
 
 ### 3. Edit Map Settings
