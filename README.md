@@ -152,7 +152,7 @@ npm start
 
 Navigate to `http://localhost:3000` to see the map:
 
-<img src="images/basicmap.png" width="500" height="300">
+<img src="images/basicmap.png" width="825" height="425">
 </div>
 
 
@@ -171,7 +171,7 @@ map.current = new mapboxgl.Map({
 
 Here we can see how the map looks like with new style:
 
-<img src="images/mapstyle.png" width="500" height="300">
+<img src="images/mapstyle.png" width="825" height="425">
 </div>
 
 
