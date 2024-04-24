@@ -29,15 +29,14 @@
 ---
 
 ## Introduction
-**Mapbox** is a handy tool for making your own maps, charts, and location-based apps. It's packed with easy-to-use features like APIs and SDKs. In this tech share, we'll walk you through setting up a basic React map using Mapbox.
-
+With **Mapbox**, you're not just making maps - you're creating cool stuff that people love. Whether it's an app to explore new places or a tool to help find your way around, Mapbox makes it easy. You can make your maps look exactly how you want, and it's super simple to use. So why not give it a try? Start making maps that stand out and make a difference!
 
 
 ---
 
 ## Registration
 
-Before setting up our map, we need to register in Mapbox.
+Before setting up our map, we need to register in Mapbox to get access token if you have not.
 
 ### 1. Create an Account
 
