@@ -27,6 +27,9 @@
 ---
 
 ## Introduction
+**Mapbox** is a handy tool for making your own maps, charts, and location-based apps. It's packed with easy-to-use features like APIs and SDKs. In this tech share, we'll walk you through setting up a basic React map using Mapbox.
+
+
 
 ---
 
