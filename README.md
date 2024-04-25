@@ -17,6 +17,9 @@
       - [2. Zoom level](#2-zoom-level)
       - [3. Center and Current Location](#3-center-and-current-location)
       - [4. Add data (how to load and visualize geographic data on the map)](#4-add-data-how-to-load-and-visualize-geographic-data-on-the-map)
+        - [4.1. Add vector data from URL](#41-add-vector-data-from-url)
+        - [4.2. Add vector data from GeoJSON](#42-add-vector-data-from-geojson)
+        - [4.3. Add raster data](#43-add-raster-data)
   - [Examples](#examples)
       - [1. Get the coordinates of the mouse pointer](#1-get-the-coordinates-of-the-mouse-pointer)
       - [2. Display map scale](#2-display-map-scale)
@@ -275,7 +278,129 @@ useEffect(() => {
 
 
 #### 4. Add data (how to load and visualize geographic data on the map) 
+The two major geographic data types are raster data and vector data. Raster data are pixel-based images (or say matrices) with geocoordinates, such as satellite imagery. Vector data are a series of coordinates based. The majority types of vector data include point, polyline, and polygon, which are usually represented by the coordinates of points on the map. 
 
+##### 4.1. Add vector data from URL 
+
+First, add a "map.current.on('load', () => {});" event to the body of "useEffect" in the App function in App.js. This enables loading and rendering the geographic data on the map when loading.
+
+```js
+    map.current.on('load', () => {
+
+    });
+```
+
+Then, include the "map.current.addSource" method in the "map.current.on('load', () => {});". Change the data property if you have a URL of geographic data. The example below is a global earthquake dataset in "point" format. 
+
+
+```js     
+      map.current.addSource('earthquakes', {
+        type: 'geojson',
+        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'
+      });
+```
+
+
+Here is the dataset example of the earthquake geographic data asset if you open its link:
+```json
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": "ak16994521", "mag": 2.3, "time": 1507425650893, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -151.5129, 63.1016, 0.0 ] } },
+{ "type": "Feature", "properties": { "id": "ak16994519", "mag": 1.7, "time": 1507425289659, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -150.4048, 63.1224, 105.5 ] } },
+{ "type": "Feature", "properties": { "id": "ak16994517", "mag": 1.6, "time": 1507424832518, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -151.3597, 63.0781, 0.0 ] } },
+{ "type": "Feature", "properties": { "id": "ci38021336", "mag": 1.42, "time": 1507423898710, "felt": null, "tsunami": 0 }, "geometry": { "type": "Point", "coordinates": [ -118.497, 34.299667, 7.64 ] } },
+......
+
+```
+
+<!-- ![Mapbox Earthquake Data Asset](images/dataURLexample.jpg) -->
+<!-- <img src="images/dataURLexample.jpg" width="825" height="425">
+</div> -->
+
+After adding the data to the new layer, you might want to style it using the paint properties for that layer type. The paint properties link provided by [MapboxLayerStyle](https://docs.mapbox.com/style-spec/reference/layers/). The "map.current.addLayer" method below is the style settings of the data visualization. This method will also be included in the "map.current.on('load', () => {});".
+
+```js  
+      map.current.addLayer({
+        'id': 'earthquakes-layer',
+        'type': 'circle',
+        'source': 'earthquakes',
+        'paint': {
+          'circle-radius': 4,
+          'circle-stroke-width': 2,
+          'circle-color': 'red',
+          'circle-stroke-color': 'white'
+        }
+      });
+```
+Now, you might want to zoom out to the entire earth and then you can see the visualization of the global earthquake points on the map. Here is a screenshot of the map. Each data point is represented by the red circle.
+
+<!-- ![Mapbox Earthquake Data Visualization](images/EarthquakeVisualization.jpg) -->
+<img src="images/EarthquakeVisualization.jpg" width="825" height="425">
+
+##### 4.2. Add vector data from GeoJSON 
+
+Replace the corresponding method above with the following two code blocks. This is a user defined GeoJSON data collection with two points. The symbol choices could be adaptive to fit into the dataset.
+
+```js
+      map.current.addSource('points', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': [
+                            {
+                                // feature for Mapbox DC
+                                'type': 'Feature',
+                                'geometry': {
+                                    'type': 'Point',
+                                    'coordinates': [
+                                        -77.03238901390978, 38.913188059745586
+                                    ]
+                                },
+                                'properties': {
+                                    'title': 'Mapbox DC'
+                                }
+                            },
+                            {
+                                // feature for Mapbox SF
+                                'type': 'Feature',
+                                'geometry': {
+                                    'type': 'Point',
+                                    'coordinates': [-122.414, 37.776]
+                                },
+                                'properties': {
+                                    'title': 'Mapbox SF'
+                                }
+                            }
+                        ]
+                    }
+                });
+      // Add a symbol layer
+      map.current.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'points',
+                    'layout': {
+                        'icon-image': 'custom-marker',
+                        // get the title name from the source's "title" property
+                        'text-field': ['get', 'title'],
+                        'text-font': [
+                            'Open Sans Semibold',
+                            'Arial Unicode MS Bold'
+                        ],
+                        'text-offset': [0, 1.25],
+                        'text-anchor': 'top'
+                    }
+                });
+```
+
+##### 4.3. Add raster data
+
+Mapbox supports self-uploaded raster data and API-based raster data. You can upload raster data to your Mapbox account in the GeoTIFF format. Please check this link for more details about the self-uploaded raster data [MapboxRaster](https://docs.mapbox.com/help/troubleshooting/uploads/#accepted-file-types-and-transfer-limits). The Mapbox Raster Tiles API also allows you to request tiles from a Mapbox-hosted raster tileset. Here is a example of Raster Tiles API query. It references the Mapbox Satellite tileset ID:
+```ruby
+https://api.mapbox.com/v4/mapbox.satellite/1/0/0@2x.jpg90?access_token= <UserAccessToken />
+```
 ---
 ## Examples
 
@@ -341,6 +466,59 @@ These controls empower users to zoom in, zoom out, and rotate the map view, prov
 ### How to make the map interactive
 
 #### Search for places 
+
+A searchbar is a common feature in maps and navigation. Luckily, Mapbox has a complementary search library for both web and react that we will use to implement search for our map. The react version of the library will give us a component that we can use to handle search.
+
+<div style="text-align:center;">
+<img src="images/searchbar.gif" width="450" height="300">
+</div>
+
+To start, install the search package for react using npm:
+
+```
+npm install @mapbox/search-js-react
+```
+
+Next, we will update our `src/App.js` file by importing the `Geocoder` component from the newly installed package:
+
+``` js
+import { Geocoder } from '@mapbox/search-js-react'
+```
+
+Then, we will add a `Geocoder` component in the returned HTML. Note that the `accessToken` prop is required, which will be your Mapbox token from earlier.
+
+```js
+// in src/App.js
+
+useEffect(() => {
+  ...
+
+  map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [lng, lat],
+      zoom: zoom
+    });
+
+  ...
+}, []);
+
+return (
+  <div>
+    <div className='searchbox'>
+      <form>
+        <Geocoder map={map.current} value='' placeholder='Search Here' accessToken={ mapboxgl.accessToken } />
+      </form>
+    </div>
+    <div ref={mapContainer} className="map-container" />
+  </div>
+);
+```
+
+The `Geocoder` component also has other props that can be passed in to set its behavior. For our example, we use the `map` prop, which takes a map instance, to center the provided map to the searched location. Both `value` and `placeholder` act similarly to their uses in HTML's `input` and just set placeholder text and values. For the full list of props, [here](https://docs.mapbox.com/mapbox-search-js/api/react/geocoding/#geocoderprops).
+
+
+
 #### Popup windows of locations on click 
 
 

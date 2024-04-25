@@ -10,7 +10,7 @@
   z-index: 1;
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   margin: 12px;
   border-radius: 4px;
 }
@@ -19,7 +19,7 @@
   position: absolute;
   z-index: 1;
   top: 0;
-  right: 0;
+  left: 0;
   margin: 12px;
   border-radius: 4px;
 }

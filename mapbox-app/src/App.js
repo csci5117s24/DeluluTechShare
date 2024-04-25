@@ -72,40 +72,57 @@ export default function App() {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  const [lng, setLng] = useState(-70.9); 
+  const [lng, setLng] = useState(-70.9);
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    console.log("LODED HERE")
-    if (map.current) return; 
+    if (map.current) return;
 
     // Add this function to get current location
     const getCurrentLocation = () => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const { longitude, latitude } = position.coords;
-            setLng(longitude);
-            setLat(latitude);
-            map.current.setCenter([longitude, latitude]);
-        });
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { longitude, latitude } = position.coords;
+        setLng(longitude);
+        setLat(latitude);
+        map.current.setCenter([longitude, latitude]);
+      });
     };
 
     map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v12',
-        center: [lng, lat],
-        zoom: zoom
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [lng, lat],
+      zoom: zoom
     });
-    setLoaded(true)
 
     map.current.on('move', () => {
-        setLng(map.current.getCenter().lng.toFixed(4));
-        setLat(map.current.getCenter().lat.toFixed(4));
-        setZoom(map.current.getZoom().toFixed(2));
+      setLng(map.current.getCenter().lng.toFixed(4));
+      setLat(map.current.getCenter().lat.toFixed(4));
+      setZoom(map.current.getZoom().toFixed(2));
     });
 
     getCurrentLocation();
+
+    map.current.on('load', () => {
+      map.current.addSource('earthquakes', {
+        type: 'geojson',
+        // Use a URL for the value for the data property.
+        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'
+      });
+
+      map.current.addLayer({
+        'id': 'earthquakes-layer',
+        'type': 'circle',
+        'source': 'earthquakes',
+        'paint': {
+          'circle-radius': 4,
+          'circle-stroke-width': 2,
+          'circle-color': 'red',
+          'circle-stroke-color': 'white'
+        }
+      });
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
