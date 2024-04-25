@@ -64,6 +64,7 @@
 
 // basic map: style, zoom, center current location
 import React, { useRef, useEffect, useState } from 'react';
+import { Geocoder } from '@mapbox/search-js-react'
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 mapboxgl.accessToken = 'pk.eyJ1Ijoid2FkZXdoYyIsImEiOiJjbHZkZDYzMWcwdGFlMmpxbWIyajM3d3l6In0.2AWytCqBSNS1hxiGhE62zA';
 
@@ -74,11 +75,13 @@ export default function App() {
   const [lng, setLng] = useState(-70.9); 
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    console.log("LODED HERE")
     if (map.current) return; 
 
-    // # Add this function to get current location
+    // Add this function to get current location
     const getCurrentLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
             const { longitude, latitude } = position.coords;
@@ -94,6 +97,7 @@ export default function App() {
         center: [lng, lat],
         zoom: zoom
     });
+    setLoaded(true)
 
     map.current.on('move', () => {
         setLng(map.current.getCenter().lng.toFixed(4));
@@ -111,6 +115,11 @@ export default function App() {
     <div>
       <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+      </div>
+      <div className='searchbox'>
+        <form>
+          <Geocoder map={map.current} value='' placeholder='Search Here' accessToken={ mapboxgl.accessToken } />
+        </form>
       </div>
       <div ref={mapContainer} className="map-container" />
     </div>
