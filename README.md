@@ -515,7 +515,7 @@ return (
 );
 ```
 
-The `Geocoder` component also has other props that can be passed in to set its behavior. For our example, we use the `map` prop, which takes a map instance, to center the provided map to the searched location. Both `value` and `placeholder` act similarly to their uses in HTML's `input` and just set placeholder text and values. For the full list of props, [here](https://docs.mapbox.com/mapbox-search-js/api/react/geocoding/#geocoderprops).
+The `Geocoder` component also has other props that can be passed in to set its behavior. For our example, we use the `map` prop, which takes a map instance, to center the provided map to the searched location. Both `value` and `placeholder` act similarly to their uses in HTML's `input` and just set placeholder text and values. For the full list of props, click [here](https://docs.mapbox.com/mapbox-search-js/api/react/geocoding/#geocoderprops).
 
 
 
