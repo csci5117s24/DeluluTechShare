@@ -65,7 +65,7 @@
 // basic map: style, zoom, center current location
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-mapboxgl.accessToken = 'pk.eyJ1Ijoid2FkZXdoYyIsImEiOiJjbHZkZDYzMWcwdGFlMmpxbWIyajM3d3l6In0.2AWytCqBSNS1hxiGhE62zA';
+mapboxgl.accessToken = 'pk.eyJ1IjoieGlhbzAyNjEiLCJhIjoiY2x2ZTMwamd5MDVnZzJrbjEydDlhcHY2MyJ9.S1KPQNcqgcoJckWvb5o76g';
 
 export default function App() {
   const mapContainer = useRef(null);
@@ -90,7 +90,7 @@ export default function App() {
 
     map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v12',
+        style: 'mapbox://styles/xiao0261/clvfkua2x028o01qlb78c6359',
         center: [lng, lat],
         zoom: zoom
     });
@@ -101,8 +101,23 @@ export default function App() {
         setZoom(map.current.getZoom().toFixed(2));
     });
 
+    map.current.on('click', (event) => {
+      // If the user clicked on one of your markers, get its information.
+      const features = map.current.queryRenderedFeatures(event.point, {
+        layers: ['chicago-parks'] // replace with your layer name
+      });
+      if (!features.length) {
+        return;
+      }
+      const feature = features[0];
+      const popup = new mapboxgl.Popup({ offset: [0, -15] })
+      .setLngLat(feature.geometry.coordinates)
+      .setHTML(
+        `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
+      )
+      .addTo(map.current);
+    });
     getCurrentLocation();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
