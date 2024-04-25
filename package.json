@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "mapbox-gl": "^3.3.0",
+    "react-scripts": "^5.0.1"
+  },
+  "name": "delulutechshare",
+  "description": "## Table of Contents - [Delulu Tech Share: Mapbox API](#delulu-tech-share-mapbox-api)   - [Table of Contents](#table-of-contents)   - [Introduction](#introduction)   - [Registration](#registration)     - [1. Create an Account](#1-create-an-account)     - [2. Create an Access Token](#2-create-an-access-token)   - [Map setup](#map-setup)     - [1. Create React app](#1-create-react-app)       - [Install Node.js and npm](#install-nodejs-and-npm)       - [Install and create a new React app](#install-and-create-a-new-react-app)     - [2. Set up basic map](#2-set-up-basic-map)     - [3. Edit Map Settings](#3-edit-map-settings)       - [1. Styles](#1-styles)       - [2. Zoom level](#2-zoom-level)       - [3. Center and Current Location](#3-center-and-current-location)       - [4. Add data (how to load and visualize geographic data on the map)](#4-add-data-how-to-load-and-visualize-geographic-data-on-the-map)   - [Examples](#examples)       - [1. Get the coordinates of the mouse pointer](#1-get-the-coordinates-of-the-mouse-pointer)       - [2. Display map scale](#2-display-map-scale)       - [3. Display zoom and rotation controls](#3-display-zoom-and-rotation-controls)     - [How to make the map interactive](#how-to-make-the-map-interactive)       - [Search for places](#search-for-places)       - [Popup windows of locations on click](#popup-windows-of-locations-on-click)   - [References and Links to More Info](#references-and-links-to-more-info)",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csci5117s24/DeluluTechShare.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csci5117s24/DeluluTechShare/issues"
+  },
+  "homepage": "https://github.com/csci5117s24/DeluluTechShare#readme"
+}

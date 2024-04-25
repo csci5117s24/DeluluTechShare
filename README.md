@@ -275,7 +275,110 @@ useEffect(() => {
 
 
 #### 4. Add data (how to load and visualize geographic data on the map) 
+The two major geographic data types are raster data and vector data. Raster data are pixel-based images (or say matrices) with geocoordinates, such as satellite imagery. Vector data are a series of coordinates based. The majority types of vector data include point, polyline, and polygon, which are usually represented by the coordinates of points on the map. 
 
+##### 4.1. Add vector data from URL 
+
+First, add a "map.current.on('load', () => {});" event to the App function in App.js. This enables loading and rendering the geographic data on the map when loading.
+
+```js
+    map.current.on('load', () => {
+
+    });
+```
+
+Then, include the "map.current.addSource" method in the "map.current.on('load', () => {});". Change the data property if you have a URL of geographic data. The example below is a global earthquake dataset in "point" format. Here is the screenshot of the earthquake geographic data asset.
+
+![Mapbox Earthquake Data Asset](images/dataURLexample.jpg)
+
+```js     
+      map.current.addSource('earthquakes', {
+        type: 'geojson',
+        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'
+      });
+```
+
+After adding the data to the new layer, you might want to style it using the paint properties for that layer type. The paint properties link provided by [Mapbox](https://docs.mapbox.com/style-spec/reference/layers/). The "map.current.addLayer" method below is the style settings of the data visualization. This method will also be included in the "map.current.on('load', () => {});".
+
+```js  
+      map.current.addLayer({
+        'id': 'earthquakes-layer',
+        'type': 'circle',
+        'source': 'earthquakes',
+        'paint': {
+          'circle-radius': 4,
+          'circle-stroke-width': 2,
+          'circle-color': 'red',
+          'circle-stroke-color': 'white'
+        }
+      });
+```
+Now, you might want to zoom out to the entire earth and then you can see the visualization of the global earthquake points on the map. Here is a screenshot of the map. Each data point is represented by the red circle.
+
+![Mapbox Earthquake Data Visualization](images/EarthquakeVisualization.jpg)
+
+##### 4.2. Add vector data from GeoJSON 
+Replace the corresponding method above with the following two code blocks. This is a user defined GeoJSON data collection with two points. The symbol choices could be adaptive to fit into the dataset.
+
+```js
+      map.current.addSource('points', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': [
+                            {
+                                // feature for Mapbox DC
+                                'type': 'Feature',
+                                'geometry': {
+                                    'type': 'Point',
+                                    'coordinates': [
+                                        -77.03238901390978, 38.913188059745586
+                                    ]
+                                },
+                                'properties': {
+                                    'title': 'Mapbox DC'
+                                }
+                            },
+                            {
+                                // feature for Mapbox SF
+                                'type': 'Feature',
+                                'geometry': {
+                                    'type': 'Point',
+                                    'coordinates': [-122.414, 37.776]
+                                },
+                                'properties': {
+                                    'title': 'Mapbox SF'
+                                }
+                            }
+                        ]
+                    }
+                });
+```
+
+```js
+                // Add a symbol layer
+      map.current.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'points',
+                    'layout': {
+                        'icon-image': 'custom-marker',
+                        // get the title name from the source's "title" property
+                        'text-field': ['get', 'title'],
+                        'text-font': [
+                            'Open Sans Semibold',
+                            'Arial Unicode MS Bold'
+                        ],
+                        'text-offset': [0, 1.25],
+                        'text-anchor': 'top'
+                    }
+                });
+```
+##### 4.3. Add raster data
+Mapbox supports self-uploaded raster data and API-based raster data. You can upload raster data to your Mapbox account in the GeoTIFF format. Please check this link for more details about the self-uploaded raster data [Mapbox](https://docs.mapbox.com/help/troubleshooting/uploads/#accepted-file-types-and-transfer-limits). The Mapbox Raster Tiles API also allows you to request tiles from a Mapbox-hosted raster tileset. Here is a example of Raster Tiles API query. It references the Mapbox Satellite tileset ID:
+```
+https://api.mapbox.com/v4/mapbox.satellite/1/0/0@2x.jpg90?access_token= <UserAccessToken />
+```
 ---
 ## Examples
 
