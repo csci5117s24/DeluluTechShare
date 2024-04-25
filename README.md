@@ -17,6 +17,9 @@
       - [2. Zoom level](#2-zoom-level)
       - [3. Center and Current Location](#3-center-and-current-location)
       - [4. Add data (how to load and visualize geographic data on the map)](#4-add-data-how-to-load-and-visualize-geographic-data-on-the-map)
+        - [4.1. Add vector data from URL](#41-add-vector-data-from-url)
+        - [4.2. Add vector data from GeoJSON](#42-add-vector-data-from-geojson)
+        - [4.3. Add raster data](#43-add-raster-data)
   - [Examples](#examples)
       - [1. Get the coordinates of the mouse pointer](#1-get-the-coordinates-of-the-mouse-pointer)
       - [2. Display map scale](#2-display-map-scale)
@@ -289,7 +292,9 @@ First, add a "map.current.on('load', () => {});" event to the App function in Ap
 
 Then, include the "map.current.addSource" method in the "map.current.on('load', () => {});". Change the data property if you have a URL of geographic data. The example below is a global earthquake dataset in "point" format. Here is the screenshot of the earthquake geographic data asset.
 
-![Mapbox Earthquake Data Asset](images/dataURLexample.jpg)
+<!-- ![Mapbox Earthquake Data Asset](images/dataURLexample.jpg) -->
+<img src="images/dataURLexample.jpg" width="825" height="425">
+</div>
 
 ```js     
       map.current.addSource('earthquakes', {
@@ -298,7 +303,7 @@ Then, include the "map.current.addSource" method in the "map.current.on('load', 
       });
 ```
 
-After adding the data to the new layer, you might want to style it using the paint properties for that layer type. The paint properties link provided by [Mapbox](https://docs.mapbox.com/style-spec/reference/layers/). The "map.current.addLayer" method below is the style settings of the data visualization. This method will also be included in the "map.current.on('load', () => {});".
+After adding the data to the new layer, you might want to style it using the paint properties for that layer type. The paint properties link provided by [MapboxLayerStyle](https://docs.mapbox.com/style-spec/reference/layers/). The "map.current.addLayer" method below is the style settings of the data visualization. This method will also be included in the "map.current.on('load', () => {});".
 
 ```js  
       map.current.addLayer({
@@ -315,9 +320,11 @@ After adding the data to the new layer, you might want to style it using the pai
 ```
 Now, you might want to zoom out to the entire earth and then you can see the visualization of the global earthquake points on the map. Here is a screenshot of the map. Each data point is represented by the red circle.
 
-![Mapbox Earthquake Data Visualization](images/EarthquakeVisualization.jpg)
+<!-- ![Mapbox Earthquake Data Visualization](images/EarthquakeVisualization.jpg) -->
+<img src="images/EarthquakeVisualization.jpg" width="825" height="425">
 
 ##### 4.2. Add vector data from GeoJSON 
+
 Replace the corresponding method above with the following two code blocks. This is a user defined GeoJSON data collection with two points. The symbol choices could be adaptive to fit into the dataset.
 
 ```js
@@ -353,10 +360,7 @@ Replace the corresponding method above with the following two code blocks. This 
                         ]
                     }
                 });
-```
-
-```js
-                // Add a symbol layer
+      // Add a symbol layer
       map.current.addLayer({
                     'id': 'points',
                     'type': 'symbol',
@@ -374,9 +378,11 @@ Replace the corresponding method above with the following two code blocks. This 
                     }
                 });
 ```
+
 ##### 4.3. Add raster data
-Mapbox supports self-uploaded raster data and API-based raster data. You can upload raster data to your Mapbox account in the GeoTIFF format. Please check this link for more details about the self-uploaded raster data [Mapbox](https://docs.mapbox.com/help/troubleshooting/uploads/#accepted-file-types-and-transfer-limits). The Mapbox Raster Tiles API also allows you to request tiles from a Mapbox-hosted raster tileset. Here is a example of Raster Tiles API query. It references the Mapbox Satellite tileset ID:
-```
+
+Mapbox supports self-uploaded raster data and API-based raster data. You can upload raster data to your Mapbox account in the GeoTIFF format. Please check this link for more details about the self-uploaded raster data [MapboxRaster](https://docs.mapbox.com/help/troubleshooting/uploads/#accepted-file-types-and-transfer-limits). The Mapbox Raster Tiles API also allows you to request tiles from a Mapbox-hosted raster tileset. Here is a example of Raster Tiles API query. It references the Mapbox Satellite tileset ID:
+```ruby
 https://api.mapbox.com/v4/mapbox.satellite/1/0/0@2x.jpg90?access_token= <UserAccessToken />
 ```
 ---
