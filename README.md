@@ -282,7 +282,7 @@ The two major geographic data types are raster data and vector data. Raster data
 
 ##### 4.1. Add vector data from URL 
 
-First, add a "map.current.on('load', () => {});" event to the App function in App.js. This enables loading and rendering the geographic data on the map when loading.
+First, add a "map.current.on('load', () => {});" event to the body of "useEffect" in the App function in App.js. This enables loading and rendering the geographic data on the map when loading.
 
 ```js
     map.current.on('load', () => {
@@ -290,7 +290,18 @@ First, add a "map.current.on('load', () => {});" event to the App function in Ap
     });
 ```
 
-Then, include the "map.current.addSource" method in the "map.current.on('load', () => {});". Change the data property if you have a URL of geographic data. The example below is a global earthquake dataset in "point" format. Here is the dataset example of the earthquake geographic data asset if you open its link:
+Then, include the "map.current.addSource" method in the "map.current.on('load', () => {});". Change the data property if you have a URL of geographic data. The example below is a global earthquake dataset in "point" format. 
+
+
+```js     
+      map.current.addSource('earthquakes', {
+        type: 'geojson',
+        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'
+      });
+```
+
+
+Here is the dataset example of the earthquake geographic data asset if you open its link:
 ```json
 {
 "type": "FeatureCollection",
@@ -307,13 +318,6 @@ Then, include the "map.current.addSource" method in the "map.current.on('load', 
 <!-- ![Mapbox Earthquake Data Asset](images/dataURLexample.jpg) -->
 <!-- <img src="images/dataURLexample.jpg" width="825" height="425">
 </div> -->
-
-```js     
-      map.current.addSource('earthquakes', {
-        type: 'geojson',
-        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'
-      });
-```
 
 After adding the data to the new layer, you might want to style it using the paint properties for that layer type. The paint properties link provided by [MapboxLayerStyle](https://docs.mapbox.com/style-spec/reference/layers/). The "map.current.addLayer" method below is the style settings of the data visualization. This method will also be included in the "map.current.on('load', () => {});".
 
