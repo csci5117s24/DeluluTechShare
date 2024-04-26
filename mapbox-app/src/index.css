@@ -23,3 +23,8 @@
   margin: 12px;
   border-radius: 4px;
 }
+
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
+  float: right;
+  margin: 92px 10px 0 0;
+}
