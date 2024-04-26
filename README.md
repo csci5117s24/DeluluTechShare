@@ -520,6 +520,31 @@ The `Geocoder` component also has other props that can be passed in to set its b
 
 
 #### Popup windows of locations on click 
+A popup window allows a user to click on a place and show the details for a certain place or area.
+
+To create a popup, you need a Mapbox access token. You must use a token to associate your map with your account. You can find your access tokens on the Access Tokens page.
+
+1. Follow the [Part 1 tutorial](https://docs.mapbox.com/help/tutorials/add-points-pt-1/) to make a create a dataset and add points..
+2. You need to customize your own map style and configure your Popup style. Follow the [Part 2 tutorial](https://docs.mapbox.com/help/tutorials/add-points-pt-2/).
+3. Copy the code below and paste it into your own code of your Map initialization block.
+```js
+map.current.on('click', (event) => {
+      // If the user clicked on one of your markers, get its information.
+      const features = map.current.queryRenderedFeatures(event.point, {
+        layers: ['YOUR_LAYER_NAME'] // replace with your layer name in part 1 
+      });
+      if (!features.length) {
+        return;
+      }
+      const feature = features[0];
+      const popup = new mapboxgl.Popup({ offset: [0, -15] })
+      .setLngLat(feature.geometry.coordinates)
+      .setHTML(
+        `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
+      )
+      .addTo(map.current);
+    });
+```
 
 
 ## References and Links to More Info
