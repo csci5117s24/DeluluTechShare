@@ -24,9 +24,9 @@
       - [1. Get the coordinates of the mouse pointer](#1-get-the-coordinates-of-the-mouse-pointer)
       - [2. Display map scale](#2-display-map-scale)
       - [3. Display zoom and rotation controls](#3-display-zoom-and-rotation-controls)
-  - [How to make the map interactive](#how-to-make-the-map-interactive)
-    - [Search for places](#search-for-places)
-    - [Popup windows of locations on click](#popup-windows-of-locations-on-click)
+    - [How to make the map interactive](#how-to-make-the-map-interactive)
+      - [Search for places](#search-for-places)
+      - [Popup windows of locations on click](#popup-windows-of-locations-on-click)
   - [References and Links to More Info](#references-and-links-to-more-info)
 
 ---
@@ -464,9 +464,9 @@ map.current.addControl(new mapboxgl.NavigationControl());
 These controls empower users to zoom in, zoom out, and rotate the map view, providing an intuitive way to interact with the map and customize their view as needed.
 
 ---
-## How to make the map interactive
+### How to make the map interactive
 
-### Search for places 
+#### Search for places 
 
 A search bar is a common feature in maps and navigation. Luckily, Mapbox has a complementary search library for both web and React that we will use to implement search for our map. The React version of the library will provide us with a component that we can use to handle search.
 
@@ -520,12 +520,13 @@ The `Geocoder` component also has other props that can be passed in to set its b
 
 
 
-### Popup windows of locations on click 
-A popup window allows a user to click on a place and show the details for a certain place or area.
+#### Popup windows of locations on click 
+This section contains **additional** information about implementing popup windows for locations, it allows a user to click on a place and show the details for a certain place or area. 
 
-To create a popup, you need a Mapbox access token. You must use a token to associate your map with your account. You can find your access tokens on the Access Tokens page.
+Implementing popup windows for locations requires a substantial amount of code. Due to its complexity, it is impractical to include all the code here. If you are interested in adding this functionality, you can find detailed instructions below:
 
-1. Follow the [Part 1 tutorial](https://docs.mapbox.com/help/tutorials/add-points-pt-1/) to make a create a dataset and add points..
+
+1. Follow the [Part 1 tutorial](https://docs.mapbox.com/help/tutorials/add-points-pt-1/) to make a create a dataset and add points.
 2. You need to customize your own map style and configure your Popup style. Follow the [Part 2 tutorial](https://docs.mapbox.com/help/tutorials/add-points-pt-2/).
 3. Copy the code below and paste it into your own code of your Map initialization block.
 ```js
