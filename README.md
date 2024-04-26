@@ -25,8 +25,8 @@
       - [2. Display map scale](#2-display-map-scale)
       - [3. Display zoom and rotation controls](#3-display-zoom-and-rotation-controls)
     - [How to make the map interactive](#how-to-make-the-map-interactive)
-      - [Search for places](#search-for-places)
-      - [Popup windows of locations on click](#popup-windows-of-locations-on-click)
+      - [1. Search for places](#1-search-for-places)
+      - [2. Popup windows of locations on click](#2-popup-windows-of-locations-on-click)
   - [References and Links to More Info](#references-and-links-to-more-info)
 
 ---
@@ -466,7 +466,7 @@ These controls empower users to zoom in, zoom out, and rotate the map view, prov
 ---
 ### How to make the map interactive
 
-#### Search for places 
+#### 1. Search for places 
 
 A search bar is a common feature in maps and navigation. Luckily, Mapbox has a complementary search library for both web and React that we will use to implement search for our map. The React version of the library will provide us with a component that we can use to handle search.
 
@@ -520,7 +520,7 @@ The `Geocoder` component also has other props that can be passed in to set its b
 
 
 
-#### Popup windows of locations on click 
+#### 2. Popup windows of locations on click 
 This section contains **additional** information about implementing popup windows for locations, it allows a user to click on a place and show the details for a certain place or area. 
 
 Implementing popup windows for locations requires a substantial amount of code. Due to its complexity, it is impractical to include all the code here. If you are interested in adding this functionality, you can find detailed instructions below:
