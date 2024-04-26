@@ -24,9 +24,9 @@
       - [1. Get the coordinates of the mouse pointer](#1-get-the-coordinates-of-the-mouse-pointer)
       - [2. Display map scale](#2-display-map-scale)
       - [3. Display zoom and rotation controls](#3-display-zoom-and-rotation-controls)
-    - [How to make the map interactive](#how-to-make-the-map-interactive)
-      - [Search for places](#search-for-places)
-      - [Popup windows of locations on click](#popup-windows-of-locations-on-click)
+  - [How to make the map interactive](#how-to-make-the-map-interactive)
+    - [Search for places](#search-for-places)
+    - [Popup windows of locations on click](#popup-windows-of-locations-on-click)
   - [References and Links to More Info](#references-and-links-to-more-info)
 
 ---
@@ -282,7 +282,7 @@ The two major geographic data types are raster data and vector data. Raster data
 
 ##### 4.1. Add vector data from URL 
 
-First, add a "map.current.on('load', () => {});" event to the body of "useEffect" in the App function in App.js. This enables loading and rendering the geographic data on the map when loading.
+First, add a `map.current.on('load', () => {});` event to the body of "useEffect" in the App function in `src/App.js`. This enables loading and rendering the geographic data on the map when loading.
 
 ```js
     map.current.on('load', () => {
@@ -290,7 +290,7 @@ First, add a "map.current.on('load', () => {});" event to the body of "useEffect
     });
 ```
 
-Then, include the "map.current.addSource" method in the "map.current.on('load', () => {});". Change the data property if you have a URL of geographic data. The example below is a global earthquake dataset in "point" format. 
+Then, include the `map.current.addSource` method in the `map.current.on('load', () => {});`. Change the data property if you have a URL of geographic data. The example below is a global earthquake dataset in "point" format. 
 
 
 ```js     
@@ -319,7 +319,7 @@ Here is the dataset example of the earthquake geographic data asset if you open 
 <!-- <img src="images/dataURLexample.jpg" width="825" height="425">
 </div> -->
 
-After adding the data to the new layer, you might want to style it using the paint properties for that layer type. The paint properties link provided by [MapboxLayerStyle](https://docs.mapbox.com/style-spec/reference/layers/). The "map.current.addLayer" method below is the style settings of the data visualization. This method will also be included in the "map.current.on('load', () => {});".
+After adding the data to the new layer, you might want to style it using the paint properties for that layer type. The paint properties link provided by [MapboxLayerStyle](https://docs.mapbox.com/style-spec/reference/layers/). The "map.current.addLayer" method below is the style settings of the data visualization. This method will also be included in the `map.current.on('load', () => {});`.
 
 ```js  
       map.current.addLayer({
@@ -463,63 +463,64 @@ map.current.addControl(new mapboxgl.NavigationControl());
 
 These controls empower users to zoom in, zoom out, and rotate the map view, providing an intuitive way to interact with the map and customize their view as needed.
 
-### How to make the map interactive
+---
+## How to make the map interactive
 
-#### Search for places 
+### Search for places 
 
-A searchbar is a common feature in maps and navigation. Luckily, Mapbox has a complementary search library for both web and react that we will use to implement search for our map. The react version of the library will give us a component that we can use to handle search.
+A search bar is a common feature in maps and navigation. Luckily, Mapbox has a complementary search library for both web and React that we will use to implement search for our map. The React version of the library will provide us with a component that we can use to handle search.
 
 <div style="text-align:center;">
 <img src="images/searchbar.gif" width="450" height="300">
 </div>
 
-To start, install the search package for react using npm:
+1. To start, install the search package for react using npm:
 
-```
-npm install @mapbox/search-js-react
-```
+    ```
+    npm install @mapbox/search-js-react
+    ```
 
-Next, we will update our `src/App.js` file by importing the `Geocoder` component from the newly installed package:
+2. Then, we will update our `src/App.js` file by importing the `Geocoder` component from the newly installed package:
 
-``` js
-import { Geocoder } from '@mapbox/search-js-react'
-```
+    ``` js
+    import { Geocoder } from '@mapbox/search-js-react'
+    ```
 
-Then, we will add a `Geocoder` component in the returned HTML. Note that the `accessToken` prop is required, which will be your Mapbox token from earlier.
+3. Next, we will integrate a Geocoder component into the returned HTML. Remember, the accessToken is necessary, and you already have it!
 
-```js
-// in src/App.js
+    ```js
+    // in src/App.js
 
-useEffect(() => {
-  ...
+    useEffect(() => {
+    ...
 
-  map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [lng, lat],
-      zoom: zoom
-    });
+    map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [lng, lat],
+        zoom: zoom
+        });
 
-  ...
-}, []);
+    ...
+    }, []);
 
-return (
-  <div>
-    <div className='searchbox'>
-      <form>
-        <Geocoder map={map.current} value='' placeholder='Search Here' accessToken={ mapboxgl.accessToken } />
-      </form>
+    return (
+    <div>
+        <div className='searchbox'>
+        <form>
+            <Geocoder map={map.current} value='' placeholder='Search Here' accessToken={ mapboxgl.accessToken } />
+        </form>
+        </div>
+        <div ref={mapContainer} className="map-container" />
     </div>
-    <div ref={mapContainer} className="map-container" />
-  </div>
-);
-```
+    );
+    ```
 
 The `Geocoder` component also has other props that can be passed in to set its behavior. For our example, we use the `map` prop, which takes a map instance, to center the provided map to the searched location. Both `value` and `placeholder` act similarly to their uses in HTML's `input` and just set placeholder text and values. For the full list of props, click [here](https://docs.mapbox.com/mapbox-search-js/api/react/geocoding/#geocoderprops).
 
 
 
-#### Popup windows of locations on click 
+### Popup windows of locations on click 
 A popup window allows a user to click on a place and show the details for a certain place or area.
 
 To create a popup, you need a Mapbox access token. You must use a token to associate your map with your account. You can find your access tokens on the Access Tokens page.
